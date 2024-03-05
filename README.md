@@ -19,12 +19,7 @@ module "datadog_users" {
 
   users = [
     {
-      access_roles = {
-        "datadog" = {
-          enabled = true,
-          role    = "standard"
-        },
-      },
+      roles    = ["standard"],
       email    = "jane.smith@example.com",
       name     = "Jane Smith",
       role     = "Editor",
@@ -63,7 +58,6 @@ sops example.yaml
 | ------------------------------------------------------------------------ | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement_terraform) | >= 1.3  |
 | <a name="requirement_datadog"></a> [datadog](#requirement_datadog)       | >= 3.14 |
-| <a name="requirement_sops"></a> [sops](#requirement_sops)                | >= 0.5  |
 
 ## Providers
 
@@ -86,9 +80,9 @@ No modules.
 
 ## Inputs
 
-| Name                                             | Description | Type                                                                                                                                                                                                                           | Default | Required |
-| ------------------------------------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | :------: |
-| <a name="input_users"></a> [users](#input_users) | n/a         | <pre>list(object({<br> access_roles = map(any)<br> disabled = optional(bool, false)<br> email = string<br> name = string<br> role = string<br> send_user_invitation = optional(bool, true)<br> username = string<br> }))</pre> | n/a     |   yes    |
+| Name                                             | Description | Type                                                                                                                                                                                                     | Default | Required |
+| ------------------------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | :------: |
+| <a name="input_users"></a> [users](#input_users) | n/a         | <pre>list(object({<br> disabled = optional(bool, false)<br> email = string<br> name = string<br> roles = set(string)<br> send_user_invitation = optional(bool, true)<br> username = string<br> }))</pre> | n/a     |   yes    |
 
 ## Outputs
 

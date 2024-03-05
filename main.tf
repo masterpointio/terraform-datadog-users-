@@ -12,6 +12,6 @@ resource "datadog_user" "users" {
   disabled             = each.value.disabled
   email                = each.value.email
   name                 = each.value.name
-  roles                = [local.roles[each.value.access_roles["datadog"].role]]
+  roles                = [for role in each.value.roles : local.roles[role]]
   send_user_invitation = each.value.send_user_invitation
 }
