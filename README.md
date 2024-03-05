@@ -51,22 +51,20 @@ Here are some basic SOPS operations that help you to work with the example:
 
 - SOPS provider configuration for the example:
 
-```
+```sh
 cd ./example/complete
 export SOPS_AGE_KEY_FILE=key.txt
 ```
 
 - Encryption
--
 
-```
+```sh
 sops --encrypt --age age1uafwjn52f8qvdeyqgn5epens4nwpqaqld8ln47xs8an003r3gudqxpzt7m example.raw.yaml > example.yaml
 ```
 
 - Decryption
--
 
-```
+```sh
 sops --age age1uafwjn52f8qvdeyqgn5epens4nwpqaqld8ln47xs8an003r3gudqxpzt7m example.yaml
 ```
 
