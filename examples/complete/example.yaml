@@ -1,0 +1,22 @@
+datadog_api_key: ENC[AES256_GCM,data:i3Scnwrz2EX87g==,iv:fHkcmMN3lVzxNVuQqdrTe6tV1gNGLdeb+Hks9CFC+3k=,tag:2+jWdi+WJO7iIOOwvjtHog==,type:int]
+datadog_app_key: ENC[AES256_GCM,data:mOBHdrNr4QrVgw==,iv:DCRSQgpnPflxGLIMKcuUTFBe2vrGadul5FoQ8Wn+fcE=,tag:6nfD4HFN8tPiu6iBU3fTTg==,type:int]
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age:
+    - recipient: age1uafwjn52f8qvdeyqgn5epens4nwpqaqld8ln47xs8an003r3gudqxpzt7m
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBkTzQ0dXErU1lJQVl3Z2dN
+        L1Z6clV3djJEWGp0MDQvM2FSMWJYR3BvWVdNCjhiOGhlWVRUQWw5OHNGRU04Q0pF
+        MmlQUll0SVYzazdBUElWWGFFQkM0UE0KLS0tIG1WUkQwdUduSlluUGdpZmxOSlhn
+        ejRyZCthYkxvcnN0bHRJVG5RZlo1UEEKDoY/9Bf5OnbMQoOk7wdsTMhTHfmVLHUz
+        bYEgOsOwxlL+YEgme0vRFhL3MXGCRJwZISDdGTkFFYz0Rfp4CWksew==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2024-03-05T19:19:26Z"
+  mac: ENC[AES256_GCM,data:IlCs1adqZyo3PgCBag3inKG94A1qQXh4DnSYNcVHwU4JN/h0W/gdUC2/8yTTCinyoXL6Zgdva+QmvQmgWyiVBRzHLkm0/cKHNf82VSKqlYnjurU74AFsy1FYLHD2iC73sw8CCIhfDm/+NLS7Xcqmrzi6L1WEkw+zg+8tNU97Kb0=,iv:NAw88GWNh4H+duOaVGCStbSf3q8Sd+UGrBI53+s3jvY=,tag:DEmdoV1I+KODwV2ucoH1lw==,type:str]
+  pgp: []
+  unencrypted_suffix: _unencrypted
+  version: 3.8.1

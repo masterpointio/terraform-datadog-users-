@@ -1,0 +1,5 @@
+# This is a key created by [age](https://github.com/getsops/sops#encrypting-using-age) for this example.
+# Don't use it to encrypt real secrets.
+# Set `export SOPS_AGE_KEY_FILE=key.txt` to provide the data key required to decrypt the SOPS file.
+# public key: age1uafwjn52f8qvdeyqgn5epens4nwpqaqld8ln47xs8an003r3gudqxpzt7m
+AGE-SECRET-KEY-1RWTCHTYKJRU5FGU42AW08D6JEHHNHKHLY7EEZ5E3LPNL9RU0V05SZNG25Y
