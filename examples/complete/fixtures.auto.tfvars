@@ -1,8 +1,10 @@
 users = [
   {
     access_roles = {
-      "datadog" = true,
-      "aws"     = false,
+      "datadog" = {
+        enabled = true,
+        role    = "standard"
+      },
     },
     email    = "john.doe@example.com",
     name     = "John Doe",
@@ -11,8 +13,10 @@ users = [
   },
   {
     access_roles = {
-      "datadog" = true,
-      "aws"     = true,
+      "datadog" = {
+        enabled = true,
+        role    = "read_only"
+      },
     },
     email    = "jane.smith@example.com",
     name     = "Jane Smith",

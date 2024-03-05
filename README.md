@@ -2,11 +2,13 @@
 
 [![Release](https://img.shields.io/github/release/masterpointio/terraform-datadog-users.svg)](https://github.com/masterpointio/terraform-datadog-users/releases/latest)
 
-This Terraform module is designed to create and manage Datadog user accounts, with a specific focus on security and sensitive data handling.
+This Terraform module is designed to create and manage Datadog user accounts.
 
-To ensure the secure handling of DataDog sensitive data for datadog/datadog provider, the module is designed to work with the [SOPS (Secrets OPerationS) provider](https://github.com/mozilla/sops). SOPS is a tool for encrypting and decrypting files containing sensitive data, often used in conjunction with Terraform to manage secrets.
+The users are associated with one of the three [out-of-the-box roles](https://docs.datadoghq.com/account_management/rbac/permissions/):
 
-The module utilizes [terraform-secrets-helper](https://github.com/masterpointio/terraform-secrets-helper/tree/main) module - a helper that provides a standard way of managing secrets from different sources, incuding SOPS files.
+- Datadog Admin
+- Datadog Standard
+- Datadog Read Only
 
 ## Usage
 
@@ -18,8 +20,10 @@ module "datadog_users" {
   users = [
     {
       access_roles = {
-        "datadog" = true,
-        "aws"     = true,
+        "datadog" = {
+          enabled = true,
+          role    = "standard"
+        },
       },
       email    = "jane.smith@example.com",
       name     = "Jane Smith",
@@ -27,45 +31,28 @@ module "datadog_users" {
       username = "janesmith"
     }
   ]
-
-  secret_mapping = [
-    {
-      name = "datadog_api_key"
-      file = "example.yaml"
-      type = "sops"
-    },
-    {
-      name = "datadog_app_key"
-      file = "example.yaml"
-      type = "sops"
-    }
-  ]
 }
 ```
 
 Check out [examples/complete](examples/complete) for the full example.
 
+To ensure the secure handling of DataDog sensitive data for datadog/datadog provider, the module's example is designed to work with the [SOPS (Secrets OPerationS)](https://github.com/mozilla/sops) provider. SOPS is a tool for encrypting and decrypting files containing sensitive data, often used in conjunction with Terraform to manage secrets. The example also utilizes [terraform-secrets-helper](https://github.com/masterpointio/terraform-secrets-helper/tree/main) module - a helper that provides a standard way of managing secrets from different sources, incuding SOPS files.
+
 ❗ We recommend to use AWS KMS, GCP KMS, Azure Key Vault for SOPS files encryption. Don't use the secrets from the example in your real configuration!
 
 Here are some basic SOPS operations that help you to work with the example:
 
-- SOPS provider configuration for the example:
+- Pass `age` key to SOPS provider configuration:
 
 ```sh
 cd ./example/complete
 export SOPS_AGE_KEY_FILE=key.txt
 ```
 
-- Encryption
+- Encryption/decryption via SOPS editior
 
 ```sh
-sops --encrypt --age age1uafwjn52f8qvdeyqgn5epens4nwpqaqld8ln47xs8an003r3gudqxpzt7m example.raw.yaml > example.yaml
-```
-
-- Decryption
-
-```sh
-sops --age age1uafwjn52f8qvdeyqgn5epens4nwpqaqld8ln47xs8an003r3gudqxpzt7m example.yaml
+sops example.yaml
 ```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -86,27 +73,28 @@ sops --age age1uafwjn52f8qvdeyqgn5epens4nwpqaqld8ln47xs8an003r3gudqxpzt7m exampl
 
 ## Modules
 
-| Name                                                     | Source                       | Version |
-| -------------------------------------------------------- | ---------------------------- | ------- |
-| <a name="module_secrets"></a> [secrets](#module_secrets) | masterpointio/helper/secrets | 0.2.0   |
+No modules.
 
 ## Resources
 
-| Name                                                                                                           | Type        |
-| -------------------------------------------------------------------------------------------------------------- | ----------- |
-| [datadog_user.users](https://registry.terraform.io/providers/datadog/datadog/latest/docs/resources/user)       | resource    |
-| [datadog_role.standard](https://registry.terraform.io/providers/datadog/datadog/latest/docs/data-sources/role) | data source |
+| Name                                                                                                            | Type        |
+| --------------------------------------------------------------------------------------------------------------- | ----------- |
+| [datadog_user.users](https://registry.terraform.io/providers/datadog/datadog/latest/docs/resources/user)        | resource    |
+| [datadog_role.admin](https://registry.terraform.io/providers/datadog/datadog/latest/docs/data-sources/role)     | data source |
+| [datadog_role.read_only](https://registry.terraform.io/providers/datadog/datadog/latest/docs/data-sources/role) | data source |
+| [datadog_role.standard](https://registry.terraform.io/providers/datadog/datadog/latest/docs/data-sources/role)  | data source |
 
 ## Inputs
 
-| Name                                                                        | Description                                                                                                                                 | Type                                                                                                                                                                                                                            | Default | Required |
-| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | :------: |
-| <a name="input_secret_mapping"></a> [secret_mapping](#input_secret_mapping) | The list of secret mappings the application will need.<br>This creates secret values for the component to consume at `local.secrets[name]`. | <pre>list(object({<br> name = string<br> type = string<br> path = optional(string, null)<br> file = string<br> }))</pre>                                                                                                        | `[]`    |    no    |
-| <a name="input_users"></a> [users](#input_users)                            | n/a                                                                                                                                         | <pre>list(object({<br> access_roles = map(bool)<br> disabled = optional(bool, false)<br> email = string<br> name = string<br> role = string<br> send_user_invitation = optional(bool, true)<br> username = string<br> }))</pre> | n/a     |   yes    |
+| Name                                             | Description | Type                                                                                                                                                                                                                           | Default | Required |
+| ------------------------------------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | :------: |
+| <a name="input_users"></a> [users](#input_users) | n/a         | <pre>list(object({<br> access_roles = map(any)<br> disabled = optional(bool, false)<br> email = string<br> name = string<br> role = string<br> send_user_invitation = optional(bool, true)<br> username = string<br> }))</pre> | n/a     |   yes    |
 
 ## Outputs
 
-No outputs.
+| Name                                                                       | Description                                            |
+| -------------------------------------------------------------------------- | ------------------------------------------------------ |
+| <a name="output_datadog_users"></a> [datadog_users](#output_datadog_users) | A map of all Datadog user resources keyed by username. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
